@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.yefrig.practica1estructuradedatos;
+
+import com.yefrig.practica1estructuradedatos.frame.VentanaPrincipalJframe;
 
 /**
  *
@@ -11,6 +8,7 @@ package com.yefrig.practica1estructuradedatos;
  */
 public class Main {
     public static void main(String[] args) {
-        
+        VentanaPrincipalJframe ventana=new VentanaPrincipalJframe();
+        ventana.setVisible(true);
     }
 }
