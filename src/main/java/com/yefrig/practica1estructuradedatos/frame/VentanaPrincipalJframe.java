@@ -5,10 +5,10 @@
  */
 package com.yefrig.practica1estructuradedatos.frame;
 
-import com.yefrig.practica1estructuradedatos.objetos.Apuesta;
+import com.yefrig.practica1estructuradedatos.listaEnlazada.ListaEnlazadaDoble;
+import com.yefrig.practica1estructuradedatos.listaEnlazada.Apuesta;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -21,14 +21,25 @@ import javax.swing.JOptionPane;
 public class VentanaPrincipalJframe extends javax.swing.JFrame {
 
     private Apuesta[] apuestas;
+    private static ListaEnlazadaDoble listaDoble;
     /**
      * Creates new form VentanaPrincipalJframe
      */
     File archivo;
 
+    public static ListaEnlazadaDoble getListaDoble() {
+        return listaDoble;
+    }
+
+    public static void setListaDoble(ListaEnlazadaDoble listaDoble) {
+        VentanaPrincipalJframe.listaDoble = listaDoble;
+    }
+
+    
     public VentanaPrincipalJframe() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.verficarApuestasButton.setEnabled(false);
     }
 
     /**
@@ -44,8 +55,9 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         areaCargaTextArea = new javax.swing.JTextArea();
         cargaArchivoButton = new javax.swing.JButton();
-        ingresarApuestaButton = new javax.swing.JButton();
+        ingresarApuestasButton = new javax.swing.JButton();
         jButtonCleanText = new javax.swing.JButton();
+        verficarApuestasButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Control de Hipodromo");
@@ -62,10 +74,10 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
             }
         });
 
-        ingresarApuestaButton.setText("Ingresar Apuestas");
-        ingresarApuestaButton.addActionListener(new java.awt.event.ActionListener() {
+        ingresarApuestasButton.setText("Ingresar Apuestas");
+        ingresarApuestasButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ingresarApuestaButtonActionPerformed(evt);
+                ingresarApuestasButtonActionPerformed(evt);
             }
         });
 
@@ -73,6 +85,13 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         jButtonCleanText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCleanTextActionPerformed(evt);
+            }
+        });
+
+        verficarApuestasButton.setText("Verificar Apuestas");
+        verficarApuestasButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verficarApuestasButtonActionPerformed(evt);
             }
         });
 
@@ -90,21 +109,31 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
                         .addComponent(cargaArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonCleanText, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addComponent(ingresarApuestaButton)
-                        .addGap(103, 103, 103))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                        .addComponent(ingresarApuestasButton)
+                        .addGap(19, 19, 19))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(316, Short.MAX_VALUE)
+                    .addComponent(verficarApuestasButton)
+                    .addGap(194, 194, 194)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonCleanText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cargaArchivoButton, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(ingresarApuestaButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ingresarApuestasButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cargaArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(484, 484, 484)
+                    .addComponent(verficarApuestasButton)
+                    .addContainerGap(10, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,25 +154,36 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         cargarArchivo();
     }//GEN-LAST:event_cargaArchivoButtonActionPerformed
 
-    private void ingresarApuestaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarApuestaButtonActionPerformed
-        ingresoApuestas();
-    }//GEN-LAST:event_ingresarApuestaButtonActionPerformed
+    private void ingresarApuestasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarApuestasButtonActionPerformed
+        lecturaTexto();
+    }//GEN-LAST:event_ingresarApuestasButtonActionPerformed
 
     private void jButtonCleanTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCleanTextActionPerformed
         if (!this.areaCargaTextArea.getText().equals("")) {
             int opcion = JOptionPane.showConfirmDialog(null, "Desea eliminar el texto");
-            if (opcion==0) {
+            if (opcion == 0) {
                 this.areaCargaTextArea.setText("");
             }
-            
+
         }
 
     }//GEN-LAST:event_jButtonCleanTextActionPerformed
 
+    private void verficarApuestasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verficarApuestasButtonActionPerformed
+        listaDoble.cabeza();
+        System.out.println("------------------------------------");
+        listaDoble.imprimirApuestas();
+    }//GEN-LAST:event_verficarApuestasButtonActionPerformed
+
+
+    /**
+     * Metodo para cargar archivo por medio de JfileCHooser lee un archivo texto
+     */
     public void cargarArchivo() {
         JFileChooser ventanaCarga = new JFileChooser();
         int num = ventanaCarga.showOpenDialog(this);
         if (num == JFileChooser.APPROVE_OPTION) {
+            this.areaCargaTextArea.setText("");
             String linea;
             try {
                 archivo = ventanaCarga.getSelectedFile();
@@ -158,7 +198,7 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         }
     }
 
-    public void ingresoApuestas() {
+    private void lecturaTexto() {
         int num = areaCargaTextArea.getLineCount();
         apuestas = new Apuesta[num];
         String[] lineas = areaCargaTextArea.getText().split("\n");
@@ -167,6 +207,7 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
             if (campos.length == 12) {
                 int num1, num2, num3, num4, num5, num6, num7, num8, num9, num10;
                 double monto;
+                int[] ordenApuesta;
                 try {
                     num1 = Integer.valueOf(campos[2]);
                     num2 = Integer.valueOf(campos[3]);
@@ -179,14 +220,30 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
                     num9 = Integer.valueOf(campos[10]);
                     num10 = Integer.valueOf(campos[11]);
                     monto = Double.parseDouble(campos[1]);
-                    apuestas[i] = new Apuesta(campos[0], monto, num1, num2, num3, num4, num5, num6, num7, num8, num9, num10);
+                    ordenApuesta = new int[]{num1, num2, num3, num4, num5, num6, num7, num8, num9, num10};
+                    apuestas[i] = new Apuesta(campos[0], monto, ordenApuesta);
                 } catch (NumberFormatException e) {
                     System.out.println("Formato de numero  incorrecto: " + e);
                 }
-
             }
         }
+        ingresoApuestas();
+    }
 
+    private void ingresoApuestas() {
+        listaDoble = new ListaEnlazadaDoble();
+        try {
+            for (int i = 0; i < apuestas.length; i++) {
+                if (apuestas[i] != null) {
+                    listaDoble.agregarAlFinal(apuestas[i]);
+                }
+            }
+            this.ingresarApuestasButton.setEnabled(false);
+            this.verficarApuestasButton.setEnabled(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        listaDoble.imprimirApuestas();
     }
 
     /**
@@ -227,9 +284,10 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaCargaTextArea;
     private javax.swing.JButton cargaArchivoButton;
-    private javax.swing.JButton ingresarApuestaButton;
+    private javax.swing.JButton ingresarApuestasButton;
     private javax.swing.JButton jButtonCleanText;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton verficarApuestasButton;
     // End of variables declaration//GEN-END:variables
 }
