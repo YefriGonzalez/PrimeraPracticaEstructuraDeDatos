@@ -71,6 +71,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -87,7 +90,7 @@
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="verficarApuestasButton" min="-2" pref="171" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jButtonCleanText" min="-2" pref="146" max="-2" attributes="0"/>
+                      <Component id="jButtonNuevaCarrera" min="-2" pref="146" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="ingresarResultadosButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -101,7 +104,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="ingresarResultadosButton" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
-                              <Component id="jButtonCleanText" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                              <Component id="jButtonNuevaCarrera" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
                               <Component id="verficarApuestasButton" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -134,12 +137,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verficarApuestasButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonCleanText">
+            <Component class="javax.swing.JButton" name="jButtonNuevaCarrera">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar  Texto"/>
+                <Property name="text" type="java.lang.String" value="Nueva Carrera"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCleanTextActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevaCarreraActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="ingresarApuestasButton">
@@ -157,6 +160,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingresarResultadosButtonActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

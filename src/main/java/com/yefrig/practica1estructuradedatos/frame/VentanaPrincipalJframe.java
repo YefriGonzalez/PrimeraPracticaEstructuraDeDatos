@@ -23,14 +23,12 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
     private Apuesta[] apuestas;
     private static ListaEnlazadaDoble listaDoble;
     private IngresoResultadosJFrame ingreso;
-  
+
     /**
      * Creates new form VentanaPrincipalJframe
      */
     File archivo;
 
-  
-    
     public static ListaEnlazadaDoble getListaDoble() {
         return listaDoble;
     }
@@ -39,14 +37,13 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         VentanaPrincipalJframe.listaDoble = listaDoble;
     }
 
-    
     public VentanaPrincipalJframe() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.verficarApuestasButton.setEnabled(false);
+        this.ingresarResultadosButton.setEnabled(false);
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +59,7 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         cargaArchivoButton = new javax.swing.JButton();
         verficarApuestasButton = new javax.swing.JButton();
-        jButtonCleanText = new javax.swing.JButton();
+        jButtonNuevaCarrera = new javax.swing.JButton();
         ingresarApuestasButton = new javax.swing.JButton();
         ingresarResultadosButton = new javax.swing.JButton();
 
@@ -88,10 +85,10 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
             }
         });
 
-        jButtonCleanText.setText("Limpiar  Texto");
-        jButtonCleanText.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNuevaCarrera.setText("Nueva Carrera");
+        jButtonNuevaCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCleanTextActionPerformed(evt);
+                jButtonNuevaCarreraActionPerformed(evt);
             }
         });
 
@@ -121,7 +118,7 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(verficarApuestasButton, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButtonCleanText, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(ingresarResultadosButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -133,7 +130,7 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ingresarResultadosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonCleanText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(verficarApuestasButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cargaArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,33 +179,38 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
         if (!areaCargaTextArea.getText().equals("")) {
             lecturaTexto();
         }
-        
+
     }//GEN-LAST:event_ingresarApuestasButtonActionPerformed
 
-    private void jButtonCleanTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCleanTextActionPerformed
+    private void jButtonNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaCarreraActionPerformed
         if (!this.areaCargaTextArea.getText().equals("")) {
-            int opcion = JOptionPane.showConfirmDialog(null, "Desea eliminar el texto");
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la carrera actual y crear una nueva?");
             if (opcion == 0) {
                 this.areaCargaTextArea.setText("");
+                this.cargaArchivoButton.setEnabled(true);
+                this.ingresarApuestasButton.setEnabled(true);
+                this.verficarApuestasButton.setEnabled(true);
             }
 
         }
 
-    }//GEN-LAST:event_jButtonCleanTextActionPerformed
+    }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
     private void verficarApuestasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verficarApuestasButtonActionPerformed
         listaDoble.cabeza();
         System.out.println("------------------------------------");
-        listaDoble.imprimirApuestas();
         listaDoble.crearArchivoEliminados();
         this.verficarApuestasButton.setEnabled(false);
+        this.ingresarResultadosButton.setEnabled(true);
+        this.areaCargaTextArea.setText("");
+        this.areaCargaTextArea.append("Apuestas aceptadas\n");
+        listaDoble.imprimirApuestas();
     }//GEN-LAST:event_verficarApuestasButtonActionPerformed
 
     private void ingresarResultadosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarResultadosButtonActionPerformed
-        ingreso=new IngresoResultadosJFrame();
+        ingreso = new IngresoResultadosJFrame(listaDoble);
         ingreso.setVisible(true);
     }//GEN-LAST:event_ingresarResultadosButtonActionPerformed
-
 
     /**
      * Metodo para cargar archivo por medio de JfileCHooser lee un archivo texto
@@ -233,33 +235,36 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
     }
 
     private void lecturaTexto() {
-        int num = areaCargaTextArea.getLineCount();
+        int num = areaCargaTextArea.getLineCount()+1;
         apuestas = new Apuesta[num];
         String[] lineas = areaCargaTextArea.getText().split("\n");
         for (int i = 0; i < lineas.length; i++) {
-            String[] campos = lineas[i].split(",");
-            if (campos.length == 12) {
-                int num1, num2, num3, num4, num5, num6, num7, num8, num9, num10;
-                double monto;
-                int[] ordenApuesta;
-                try {
-                    num1 = Integer.valueOf(campos[2]);
-                    num2 = Integer.valueOf(campos[3]);
-                    num3 = Integer.valueOf(campos[4]);
-                    num4 = Integer.valueOf(campos[5]);
-                    num5 = Integer.valueOf(campos[6]);
-                    num6 = Integer.valueOf(campos[7]);
-                    num7 = Integer.valueOf(campos[8]);
-                    num8 = Integer.valueOf(campos[9]);
-                    num9 = Integer.valueOf(campos[10]);
-                    num10 = Integer.valueOf(campos[11]);
-                    monto = Double.parseDouble(campos[1]);
-                    ordenApuesta = new int[]{num1, num2, num3, num4, num5, num6, num7, num8, num9, num10};
-                    apuestas[i] = new Apuesta(campos[0], monto, ordenApuesta);
-                } catch (NumberFormatException e) {
-                    System.out.println("Formato de numero  incorrecto: " + e);
+            if (lineas[i] != null) {
+                String[] campos = lineas[i].split(",");
+                if (campos.length == 12) {
+                    int num1, num2, num3, num4, num5, num6, num7, num8, num9, num10;
+                    double monto;
+                    int[] ordenApuesta;
+                    try {
+                        num1 = Integer.valueOf(campos[2]);
+                        num2 = Integer.valueOf(campos[3]);
+                        num3 = Integer.valueOf(campos[4]);
+                        num4 = Integer.valueOf(campos[5]);
+                        num5 = Integer.valueOf(campos[6]);
+                        num6 = Integer.valueOf(campos[7]);
+                        num7 = Integer.valueOf(campos[8]);
+                        num8 = Integer.valueOf(campos[9]);
+                        num9 = Integer.valueOf(campos[10]);
+                        num10 = Integer.valueOf(campos[11]);
+                        monto = Double.parseDouble(campos[1]);
+                        ordenApuesta = new int[]{num1, num2, num3, num4, num5, num6, num7, num8, num9, num10};
+                        apuestas[i] = new Apuesta(campos[0], monto, ordenApuesta);
+                    } catch (Exception e) {
+                        System.out.println("Formato de numero  incorrecto: " + e);
+                    }
                 }
             }
+
         }
         ingresoApuestas();
     }
@@ -278,7 +283,8 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
             System.out.println(e);
         }
         this.areaCargaTextArea.setEditable(false);
-        listaDoble.imprimirApuestas();
+        this.cargaArchivoButton.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Apuestas Ingresadas");
     }
 
     /**
@@ -317,11 +323,11 @@ public class VentanaPrincipalJframe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea areaCargaTextArea;
+    public static javax.swing.JTextArea areaCargaTextArea;
     private javax.swing.JButton cargaArchivoButton;
     private javax.swing.JButton ingresarApuestasButton;
-    private javax.swing.JButton ingresarResultadosButton;
-    private javax.swing.JButton jButtonCleanText;
+    public static javax.swing.JButton ingresarResultadosButton;
+    private javax.swing.JButton jButtonNuevaCarrera;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -1,5 +1,7 @@
 package com.yefrig.practica1estructuradedatos.listaEnlazada;
 
+import com.yefrig.practica1estructuradedatos.frame.VentanaPrincipalJframe;
+
 /**
  *
  * @author yefri
@@ -17,6 +19,13 @@ public class Apuesta {
         this.nombreApostador = nombreApostador;
         this.monto = monto;
         this.posicionesCaballo = posiciones;
+    }
+    
+    public Apuesta(String nombreApostador, double monto, int[] posiciones,int puntos) {
+        this.nombreApostador = nombreApostador;
+        this.monto = monto;
+        this.posicionesCaballo = posiciones;
+        this.puntos=puntos;
     }
 
     public String getNombreApostador() {
@@ -64,9 +73,11 @@ public class Apuesta {
     }
     
     public void imprimirApuestas(){
-        System.out.println("Apuesta: "+nombreApostador+", Monto: "+monto+", Posiciones: "+imprimirOrdenCaballos());
+        VentanaPrincipalJframe.areaCargaTextArea.append("Apuesta: "+nombreApostador+", Monto: "+monto+", Posiciones: "+imprimirOrdenCaballos()+"\n");
         if (siguiente!=null) {
             siguiente.imprimirApuestas();
+        }else {
+            System.out.println("------------Fin-----------------");
         }
     }
     
@@ -78,7 +89,4 @@ public class Apuesta {
         }
         return posciones;
     }
-
-    
-
 }
