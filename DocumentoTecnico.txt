@@ -1,0 +1,307 @@
+public void verificarApuesta(Apuesta apuesta) {// O(n)
+        tiempoEjecucucionVerificacion += System.nanoTime();
+        if (apuesta != null) { //1
+            if (verificarRepeticion(apuesta)) {// 1
+                eliminarApuesta(apuesta);//n
+            } else {
+                verificarApuesta(apuesta.getSiguiente());//n
+            }
+        }
+        tiempoEjecucucionVerificacion += System.nanoTime();
+    } // 1+n+n+1=2n+2=o(n)
+
+
+    //metodo para eliminar apuestas
+    public void eliminarApuesta(Apuesta eliminar) {//O(n)
+        tiempoEjecucucionVerificacion += System.nanoTime();
+        if (eliminar != cabeza && eliminar != cola) { //1
+            if (eliminar.siguiente != null) {//1
+                eliminar.getAnterior().setSiguiente(eliminar.getSiguiente()); 1
+                eliminar.getSiguiente().setAnterior(eliminar.getAnterior()); 1
+                Apuesta tmp = eliminar.getSiguiente(); 1
+                eliminar.setAnterior(null); 1
+                eliminar.setSiguiente(null); 1
+                pasosVerificacion += 5;      1
+                guardarEliminadas(eliminar); 1
+                verificarApuesta(tmp);  n
+            } else {
+                eliminar.getAnterior().setSiguiente(null); 1
+                eliminar.setAnterior(null); 1
+                eliminar.setSiguiente(null); 1
+                pasosVerificacion += 3; 1
+                guardarEliminadas(eliminar); 1
+            }
+
+        } else if (eliminar == cabeza) {
+            if (eliminar.siguiente != null) { 1 
+                cabeza = eliminar.getSiguiente(); 1
+                cabeza.setAnterior(null); 1
+                eliminar.setSiguiente(null); 1
+                pasosVerificacion += 4; 1
+                guardarEliminadas(eliminar); 1
+                verificarApuesta(cabeza); n
+            } else { 
+                eliminar.setAnterior(null); 1
+                eliminar.setSiguiente(null); 1
+                pasosVerificacion += 2; 1
+                guardarEliminadas(eliminar); 1
+            }
+        } else if (eliminar == cola) { 1
+            cola = cola.getAnterior(); 1
+            cola.setSiguiente(null); 1
+            eliminar.setAnterior(null); 1
+            eliminar.setSiguiente(null); 1
+            pasosVerificacion += 4; 1
+            guardarEliminadas(eliminar); 1
+        } else {
+            if (eliminar.siguiente != null) {
+                verificarApuesta(eliminar.siguiente); n
+            }
+        }
+        tiempoEjecucucionVerificacion += System.nanoTime();
+
+        31+3n=o(n)
+
+    }
+
+
+
+    // metodo para verificar la repeticion
+    public boolean verificarRepeticion(Apuesta actual) {//o(n)
+        tiempoEjecucucionVerificacion += System.nanoTime(); 1
+        boolean caballo1 = false; 1
+        boolean caballo2 = false; 1
+        boolean caballo3 = false; 1
+        boolean caballo4 = false; 1
+        boolean caballo5 = false; 1
+        boolean caballo6 = false; 1
+        boolean caballo7 = false; 1
+        boolean caballo8 = false; 1
+        boolean caballo9 = false; 1
+        boolean caballo10 = false; 1
+        pasosVerificacion += 10; 1
+        cantApuestas++; 1
+        for (int i = 0; i < actual.getPosicionesCaballo().length; i++) {1+n +1 =n+2
+            switch (actual.getPosicionesCaballo()[i]) { 1
+                case 1:                                  1 
+                    if (!caballo1) {                      1
+                        pasosVerificacion++;               1 
+                        caballo1 = true;                 1
+                    } else { 
+                        pasosVerificacion++;              1
+                        return true;                      1 
+                    }
+                    break;                                1
+
+                case 2:
+                    if (!caballo2) {                      1
+                        pasosVerificacion++;               1
+                        caballo2 = true;                    1
+                    } else {
+                        pasosVerificacion++;                1    
+                        return true;                        1
+                    }
+                    break;
+
+                case 3:
+                    if (!caballo3) {                        1
+                        pasosVerificacion++;                1
+                        caballo3 = true;                    1
+                    } else {
+                        pasosVerificacion++;                 1
+                        return true;                         1 
+                    }
+                    break;                                   1
+
+                case 4:
+                    if (!caballo4) {                         1
+                        pasosVerificacion++;                 1
+                        caballo4 = true;                      1
+                    } else {
+                        pasosVerificacion++;                   1
+                        return true;                         1
+                    }
+                    break;
+
+                case 5:
+                    if (!caballo5) {                           1
+                        pasosVerificacion++;                   1
+                        caballo5 = true;                       1
+                    } else { 
+                        return true;                           1
+                    }
+                    break;
+                case 6:
+                    if (!caballo6) {                             1
+                        pasosVerificacion++;                      1
+                        caballo6 = true;                         1
+                    } else {
+                        return true;                             1
+                    }
+                    break;
+                case 7:
+                    if (!caballo7) {                              1
+                        pasosVerificacion++;                      1
+                        caballo7 = true;                         1
+                    } else {
+                        pasosVerificacion++;                       1
+                        return true;                               1
+                    }
+                    break;
+                case 8:
+                    if (!caballo8) {                               1
+                        pasosVerificacion++;                        1 
+                        caballo8 = true;                            1
+                    } else {                    
+                        pasosVerificacion++;                        1
+                        return true;                                1
+                    }
+                    break;                                          1
+                case 9:
+                    if (!caballo9) {                                1
+                        pasosVerificacion++;                        1
+                        caballo9 = true;                            1
+                    } else {
+                        pasosVerificacion++;                         1
+                        return true;                                 1
+                    }
+                    break;                                           1  
+                case 10:
+                    if (!caballo10) {                                1
+                        pasosVerificacion++;                          1                          
+                        caballo10 = true;                           1 
+                    } else {
+                        pasosVerificacion++;                         1
+                        return true;                                 1
+                    }
+                    break;                                           1
+
+                default:
+                    pasosVerificacion++;                              1
+                    return true;                                     1
+            } 
+        }
+        tiempoEjecucucionVerificacion += System.nanoTime();           1
+        return false;                                                 1
+    }n+2+71=n+79=o(n)
+
+
+
+
+    // metodo para calcular los resultados
+    public void calculoResultados() {
+        resultados = new Apuesta[cantApuestas];  //1
+        Apuesta apuesta = cabeza; //1
+        int puntos = 0; //1
+        int num1 = Integer.parseInt((String) jComboC1.getSelectedItem()); //1
+        int num2 = Integer.parseInt((String) jComboC2.getSelectedItem()); //1
+        int num3 = Integer.parseInt((String) jComboC3.getSelectedItem()); //1
+        int num4 = Integer.parseInt((String) jComboC4.getSelectedItem()); //1
+        int num5 = Integer.parseInt((String) jComboC5.getSelectedItem()); //1
+        int num6 = Integer.parseInt((String) jComboC6.getSelectedItem());//1
+        int num7 = Integer.parseInt((String) jComboC7.getSelectedItem());//1
+        int num8 = Integer.parseInt((String) jComboC8.getSelectedItem());//1
+        int num9 = Integer.parseInt((String) jComboC9.getSelectedItem());//1
+        int num10 = Integer.parseInt((String) jComboC10.getSelectedItem());//1
+        int cont = 0;//1
+        int[] arrayNumeros = {num1, num2, num3, num4, num5, num6, num7, num8, num9, num10}; //1
+        while (apuesta != null) {//n 
+            if (num1 == apuesta.getPosicionesCaballo()[0]) { //1
+                puntos += 10;//1
+            }
+            if (num2 == apuesta.getPosicionesCaballo()[1]) {//1
+                puntos += 9;//1
+            }
+            if (num3 == apuesta.getPosicionesCaballo()[2]) {//1
+                puntos += 8;//1
+            }
+            if (num4 == apuesta.getPosicionesCaballo()[3]) {//1
+                puntos += 7;//1
+            }
+            if (num5 == apuesta.getPosicionesCaballo()[4]) {//1
+                puntos += 6;//1
+            }
+            if (num6 == apuesta.getPosicionesCaballo()[5]) {//1
+                puntos += 5;//1
+            }
+            if (num7 == apuesta.getPosicionesCaballo()[6]) {//1
+                puntos += 4;//1
+            }
+            if (num8 == apuesta.getPosicionesCaballo()[7]) {//1
+                puntos += 3;//1
+            }
+            if (num9 == apuesta.getPosicionesCaballo()[8]) {//1
+                puntos += 2;//1
+            }
+            if (num10 == apuesta.getPosicionesCaballo()[9]) {//1
+                puntos += 1;//1
+            }
+            apuesta.setPuntos(puntos);//1
+            resultados[cont] = new Apuesta(apuesta.getNombreApostador(), apuesta.getMonto(), apuesta.getPosicionesCaballo(),apuesta.getPuntos());  //1  
+            puntos = 0;//1
+            apuesta = apuesta.getSiguiente();//1
+            cont++;//1
+        }
+
+        n+40= o(n)
+    }
+
+
+//metodo para ordernar los resultados
+public void ordenarResultados(Apuesta[] results, int opcion) {//1
+        if (opcion == 0) {//ordenar por numeros //1
+            for (int i = 0; i < results.length; i++) { //n+2
+                for (int j = 1; j < results.length - i; j++) { //n+2
+                    if (results[j] != null) { //1
+                        if (results[j - 1].getPuntos() < results[j].getPuntos()) { //1 
+                            Apuesta temp = resultados[j - 1]; //1
+                            results[j - 1] = resultados[j]; //1
+                            results[j] = temp; //1
+                        }
+                    }
+
+                }
+            }
+            crearArchivoResultados(); //1
+            2n² +6)o(n)
+        } else if (opcion == 1) { //1
+            for (int i = 0; i < results.length; i++) {  //n+2
+                for (int j = 1; j < results.length - 1; j++) {n+2 
+                    if (results[j] != null) {//1
+                        if (resultados[j - 1].getNombreApostador().compareTo(resultados[j].getNombreApostador()) > 0) { //1
+                            Apuesta temp = resultados[j - 1]; //1
+                            resultados[j - 1] = resultados[j]; //1
+                            resultados[j] = temp;
+                        }
+                    } 
+
+                }
+            }
+            crearArchivoResultados();//1
+
+            2n² +6)o(n)
+        }
+
+    }
+
+
+    //metodo para ingresar apuestas
+    private void ingresoApuestas() {
+        listaDoble = new ListaEnlazadaDoble(); //1
+        try {
+            for (int i = 0; i < apuestas.length; i++) {n+2
+                if (apuestas[i] != null) {//1
+                    listaDoble.agregarAlFinal(apuestas[i]);//1
+                }
+            }
+            this.ingresarApuestasButton.setEnabled(false);//1
+            this.verficarApuestasButton.setEnabled(true); //1
+        } catch (Exception e) {
+            System.out.println(e);//1
+        }
+        this.areaCargaTextArea.setEditable(false);//1
+        this.cargaArchivoButton.setEnabled(false);//1
+        JOptionPane.showMessageDialog(null, "Apuestas Ingresadas");//1
+
+        n+2+8=o(n)
+    }

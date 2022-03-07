@@ -44,6 +44,7 @@ public class ListaEnlazadaDoble {
      @param Apuesta agregar
      * Parametro  de una apuesta para iniciarlizar  mi lista
      * y agregar al final
+     * Funcion de complejidad O(1) 
      */
     public void agregarAlFinal(Apuesta Agregar) { //O(1)
         if (cabeza == null) {
@@ -56,26 +57,47 @@ public class ListaEnlazadaDoble {
         }
     }
 
+    /**
+     * Metodo get de cabeza
+    */
     public Apuesta getCabeza() {
         return cabeza;
     }
 
+    /**
+     * Metodo set de cabeza
+     * @param cabeza
+    */
     public void setCabeza(Apuesta cabeza) {
         this.cabeza = cabeza;
     }
 
+    /**
+     * Metodo get de cola
+     * @return 
+    */
     public Apuesta getCola() {
         return cola;
     }
 
+    /**
+     * Metodo set de cola
+    */
     public void setCola(Apuesta cola) {
         this.cola = cola;
     }
 
+    /**
+     * Metodo cabeza que inicaliza la verificacion de apuest
+    */
     public void cabeza() {
         verificarApuesta(cabeza);
     }
 
+    /**
+     * metodo verificar apuesta 
+     * es una funcion
+     */
     public void verificarApuesta(Apuesta apuesta) {
         tiempoEjecucucionVerificacion += System.nanoTime();
         if (apuesta != null) {
